@@ -18,6 +18,7 @@ Deploys [bakery-orders-api](https://github.com/b0tjim/bakery-orders-api) to a lo
 ```bash
 make cluster-up     # single-node kind cluster named bakery-lab
 kubectl get nodes
+make image          # build bakery-orders-api from source, kind load it as bakery-orders-api:local
 make cluster-down   # tear it down
 ```
 

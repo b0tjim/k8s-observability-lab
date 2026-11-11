@@ -11,3 +11,4 @@ charts/*/Chart.lock
 .vscode/
 .idea/
 .DS_Store
+.cache/
