@@ -4,8 +4,8 @@ A Helm chart that deploys [bakery-orders-api](https://github.com/b0tjim/bakery-o
 [kind](https://kind.sigs.k8s.io/) cluster, with Prometheus + Grafana (kube-prometheus-stack) scraping the
 app's `/metrics` endpoint and a provisioned Grafana dashboard. CI spins up kind and smoke-tests it all.
 
-- [ ] 1. Repo skeleton: README stub, .gitignore, .editorconfig, LICENSE
-- [ ] 2. `kind/cluster.yaml` (one control-plane node, port mapping for the app) + `make cluster-up` / `cluster-down`
+- [x] 1. Repo skeleton: README stub, .gitignore, .editorconfig, LICENSE
+- [x] 2. `kind/cluster.yaml` (one control-plane node, port mapping for the app) + `make cluster-up` / `cluster-down`
 - [ ] 3. Script to get the app image into kind: build bakery-orders-api from source and `kind load docker-image` (works without a published GHCR tag)
 - [ ] 4. Helm chart scaffold `charts/bakery-orders-api`: Chart.yaml, values.yaml, `_helpers.tpl` (names + labels)
 - [ ] 5. Chart: PostgreSQL StatefulSet + Service + Secret for local dev (small, in-chart, no external subchart)

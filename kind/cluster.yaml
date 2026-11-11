@@ -1,0 +1,11 @@
+# Single-node kind cluster for the lab.
+# Port 30080 on the node is mapped to localhost:8080 so a NodePort Service can be reached without port-forward.
+kind: Cluster
+apiVersion: kind.x-k8s.io/v1alpha4
+name: bakery-lab
+nodes:
+  - role: control-plane
+    extraPortMappings:
+      - containerPort: 30080
+        hostPort: 8080
+        protocol: TCP

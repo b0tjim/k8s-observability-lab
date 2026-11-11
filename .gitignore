@@ -1,0 +1,13 @@
+# Helm
+charts/*/charts/
+charts/*/Chart.lock
+*.tgz
+
+# Local kubeconfigs and env
+*.kubeconfig
+.env
+
+# Editors / OS
+.vscode/
+.idea/
+.DS_Store
