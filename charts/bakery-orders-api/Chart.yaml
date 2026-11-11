@@ -1,0 +1,7 @@
+apiVersion: v2
+name: bakery-orders-api
+description: FastAPI order API for a cottage bakery, with an in-chart PostgreSQL for local dev
+type: application
+version: 0.1.0
+appVersion: "0.1.0"
+home: https://github.com/b0tjim/bakery-orders-api

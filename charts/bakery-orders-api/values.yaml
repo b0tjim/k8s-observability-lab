@@ -1,0 +1,13 @@
+# Default values for bakery-orders-api.
+
+image:
+  repository: ghcr.io/b0tjim/bakery-orders-api
+  # Defaults to the chart's appVersion when empty.
+  tag: ""
+  pullPolicy: IfNotPresent
+
+replicaCount: 1
+
+# Override the generated resource names if needed.
+nameOverride: ""
+fullnameOverride: ""

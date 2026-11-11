@@ -7,7 +7,7 @@ app's `/metrics` endpoint and a provisioned Grafana dashboard. CI spins up kind 
 - [x] 1. Repo skeleton: README stub, .gitignore, .editorconfig, LICENSE
 - [x] 2. `kind/cluster.yaml` (one control-plane node, port mapping for the app) + `make cluster-up` / `cluster-down`
 - [x] 3. Script to get the app image into kind: build bakery-orders-api from source and `kind load docker-image` (works without a published GHCR tag)
-- [ ] 4. Helm chart scaffold `charts/bakery-orders-api`: Chart.yaml, values.yaml, `_helpers.tpl` (names + labels)
+- [x] 4. Helm chart scaffold `charts/bakery-orders-api`: Chart.yaml, values.yaml, `_helpers.tpl` (names + labels)
 - [ ] 5. Chart: PostgreSQL StatefulSet + Service + Secret for local dev (small, in-chart, no external subchart)
 - [ ] 6. Chart: app Deployment with `DATABASE_URL` from the Secret, resource requests/limits
 - [ ] 7. Chart: liveness/readiness probes on `/health`, and a ClusterIP Service exposing port 8000

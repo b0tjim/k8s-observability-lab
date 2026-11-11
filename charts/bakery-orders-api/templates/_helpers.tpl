@@ -1,0 +1,47 @@
+{{/*
+Chart name, truncated to 63 chars (the Kubernetes name limit).
+*/}}
+{{- define "bakery-orders-api.name" -}}
+{{- default .Chart.Name .Values.nameOverride | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Full name for resources: <release>-<chart>, or just <release> if it already contains the chart name.
+*/}}
+{{- define "bakery-orders-api.fullname" -}}
+{{- if .Values.fullnameOverride }}
+{{- .Values.fullnameOverride | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- $name := default .Chart.Name .Values.nameOverride }}
+{{- if contains $name .Release.Name }}
+{{- .Release.Name | trunc 63 | trimSuffix "-" }}
+{{- else }}
+{{- printf "%s-%s" .Release.Name $name | trunc 63 | trimSuffix "-" }}
+{{- end }}
+{{- end }}
+{{- end }}
+
+{{/*
+Labels that never change for a release; used in Deployment/Service selectors.
+*/}}
+{{- define "bakery-orders-api.selectorLabels" -}}
+app.kubernetes.io/name: {{ include "bakery-orders-api.name" . }}
+app.kubernetes.io/instance: {{ .Release.Name }}
+{{- end }}
+
+{{/*
+Common labels for every resource.
+*/}}
+{{- define "bakery-orders-api.labels" -}}
+helm.sh/chart: {{ printf "%s-%s" .Chart.Name .Chart.Version | replace "+" "_" | trunc 63 | trimSuffix "-" }}
+{{ include "bakery-orders-api.selectorLabels" . }}
+app.kubernetes.io/version: {{ .Chart.AppVersion | quote }}
+app.kubernetes.io/managed-by: {{ .Release.Service }}
+{{- end }}
+
+{{/*
+Image reference, falling back to the chart's appVersion for the tag.
+*/}}
+{{- define "bakery-orders-api.image" -}}
+{{- printf "%s:%s" .Values.image.repository (default .Chart.AppVersion .Values.image.tag) }}
+{{- end }}

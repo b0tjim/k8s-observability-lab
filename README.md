@@ -22,6 +22,12 @@ make image          # build bakery-orders-api from source, kind load it as baker
 make cluster-down   # tear it down
 ```
 
+## Layout
+
+- `kind/cluster.yaml` - single-node kind cluster config
+- `scripts/load-image.sh` - builds the app image from source and loads it into kind
+- `charts/bakery-orders-api/` - Helm chart for the app (in progress)
+
 ## License
 
 MIT
