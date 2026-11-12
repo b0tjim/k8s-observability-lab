@@ -9,8 +9,8 @@ app's `/metrics` endpoint and a provisioned Grafana dashboard. CI spins up kind 
 - [x] 3. Script to get the app image into kind: build bakery-orders-api from source and `kind load docker-image` (works without a published GHCR tag)
 - [x] 4. Helm chart scaffold `charts/bakery-orders-api`: Chart.yaml, values.yaml, `_helpers.tpl` (names + labels)
 - [x] 5. Chart: PostgreSQL StatefulSet + Service + Secret for local dev (small, in-chart, no external subchart)
-- [ ] 6. Chart: app Deployment with `DATABASE_URL` from the Secret, resource requests/limits
-- [ ] 7. Chart: liveness/readiness probes on `/health`, and a ClusterIP Service exposing port 8000
+- [x] 6. Chart: app Deployment with `DATABASE_URL` from the Secret, resource requests/limits
+- [x] 7. Chart: liveness/readiness probes on `/health`, and a ClusterIP Service exposing port 8000
 - [ ] 8. `helm lint` and `helm template` pass; add a `values-kind.yaml` (local image, `pullPolicy: Never`)
 - [ ] 9. CI workflow: `helm lint` + kubeconform validation of rendered manifests on every push
 - [ ] 10. CI workflow: create a kind cluster, load the image, `helm install`, wait for rollout

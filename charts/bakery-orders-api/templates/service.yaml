@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ include "bakery-orders-api.fullname" . }}
+  labels:
+    {{- include "bakery-orders-api.labels" . | nindent 4 }}
+    app.kubernetes.io/component: api
+spec:
+  type: ClusterIP
+  ports:
+    - name: http
+      port: {{ .Values.service.port }}
+      targetPort: http
+  selector:
+    {{- include "bakery-orders-api.selectorLabels" . | nindent 4 }}
+    app.kubernetes.io/component: api
