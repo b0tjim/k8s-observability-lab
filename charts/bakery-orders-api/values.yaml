@@ -11,3 +11,18 @@ replicaCount: 1
 # Override the generated resource names if needed.
 nameOverride: ""
 fullnameOverride: ""
+
+# In-chart PostgreSQL for local dev only. For real environments, point the app at a managed database instead.
+postgresql:
+  image: postgres:16-alpine
+  user: bakery
+  database: bakery
+  # Placeholder for local kind clusters; override with --set postgresql.password=... anywhere else.
+  password: change-me
+  storage: 1Gi
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+    limits:
+      memory: 256Mi

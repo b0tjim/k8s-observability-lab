@@ -45,3 +45,18 @@ Image reference, falling back to the chart's appVersion for the tag.
 {{- define "bakery-orders-api.image" -}}
 {{- printf "%s:%s" .Values.image.repository (default .Chart.AppVersion .Values.image.tag) }}
 {{- end }}
+
+{{/*
+Name shared by the PostgreSQL StatefulSet, Service and Secret.
+*/}}
+{{- define "bakery-orders-api.postgresql.fullname" -}}
+{{- printf "%s-postgresql" (include "bakery-orders-api.fullname" .) | trunc 63 | trimSuffix "-" }}
+{{- end }}
+
+{{/*
+Selector labels for the PostgreSQL pod (distinct from the app's via app.kubernetes.io/component).
+*/}}
+{{- define "bakery-orders-api.postgresql.selectorLabels" -}}
+{{ include "bakery-orders-api.selectorLabels" . }}
+app.kubernetes.io/component: postgresql
+{{- end }}
