@@ -1,0 +1,6 @@
+# Overrides for a local kind cluster: use the image built and loaded by `make image`.
+image:
+  repository: bakery-orders-api
+  tag: local
+  # The image only exists inside the kind node, so never try to pull it.
+  pullPolicy: Never
