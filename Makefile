@@ -1,6 +1,6 @@
 CLUSTER_NAME ?= bakery-lab
 
-.PHONY: cluster-up cluster-down image lint validate
+.PHONY: cluster-up cluster-down image install lint validate
 
 cluster-up: ## Create the local kind cluster
 	kind create cluster --config kind/cluster.yaml --name $(CLUSTER_NAME) --wait 60s
@@ -10,6 +10,10 @@ cluster-down: ## Delete the local kind cluster
 
 image: ## Build bakery-orders-api from source and load it into kind
 	CLUSTER_NAME=$(CLUSTER_NAME) scripts/load-image.sh
+
+install: ## Install (or upgrade) the chart into kind and wait for it to be ready
+	helm upgrade --install bakery charts/bakery-orders-api -f charts/bakery-orders-api/values-kind.yaml --wait --timeout 5m
+	kubectl rollout status deployment/bakery-bakery-orders-api --timeout 2m
 
 lint: ## Lint the chart and render it with the kind values
 	helm lint charts/bakery-orders-api -f charts/bakery-orders-api/values-kind.yaml
