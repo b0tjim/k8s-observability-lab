@@ -12,7 +12,7 @@ app's `/metrics` endpoint and a provisioned Grafana dashboard. CI spins up kind 
 - [x] 6. Chart: app Deployment with `DATABASE_URL` from the Secret, resource requests/limits
 - [x] 7. Chart: liveness/readiness probes on `/health`, and a ClusterIP Service exposing port 8000
 - [x] 8. `helm lint` and `helm template` pass; add a `values-kind.yaml` (local image, `pullPolicy: Never`)
-- [ ] 9. CI workflow: `helm lint` + kubeconform validation of rendered manifests on every push
+- [x] 9. CI workflow: `helm lint` + kubeconform validation of rendered manifests on every push
 - [ ] 10. CI workflow: create a kind cluster, load the image, `helm install`, wait for rollout
 - [ ] 11. CI smoke test: port-forward and `curl` `/health`, create an order, list it back
 - [ ] 12. Install kube-prometheus-stack via `make monitoring-up` with a pinned chart version and `monitoring/values.yaml`
