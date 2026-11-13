@@ -52,6 +52,9 @@ jobs:
       - name: Install the chart and wait for rollout
         run: make install
 
+      - name: Smoke test (health, create an order, list it back)
+        run: make smoke
+
       - name: Show cluster state on failure
         if: failure()
         run: |
