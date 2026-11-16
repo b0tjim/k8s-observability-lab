@@ -29,6 +29,9 @@ jobs:
       - name: Validate rendered manifests against Kubernetes schemas
         run: make validate
 
+      - name: Check dashboard JSON is valid
+        run: jq empty dashboards/*.json
+
   kind:
     name: Deploy to kind
     runs-on: ubuntu-latest

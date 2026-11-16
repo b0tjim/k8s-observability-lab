@@ -17,7 +17,7 @@ app's `/metrics` endpoint and a provisioned Grafana dashboard. CI spins up kind 
 - [x] 11. CI smoke test: port-forward and `curl` `/health`, create an order, list it back
 - [x] 12. Install kube-prometheus-stack via `make monitoring-up` with a pinned chart version and `monitoring/values.yaml`
 - [x] 13. Chart: optional ServiceMonitor (toggled by `metrics.serviceMonitor.enabled`) scraping `/metrics`
-- [ ] 14. Grafana dashboard JSON (request rate, latency, error rate, orders created) in `dashboards/`
+- [x] 14. Grafana dashboard JSON (request rate, latency, error rate, orders created) in `dashboards/`
 - [ ] 15. Chart: ConfigMap with the `grafana_dashboard` label so Grafana's sidecar auto-loads the dashboard
 - [ ] 16. A couple of PrometheusRule alerts (app down, high 5xx rate)
 - [ ] 17. CI: install the monitoring stack in kind and assert Prometheus has the app target `up`
