@@ -19,6 +19,7 @@ Deploys [bakery-orders-api](https://github.com/b0tjim/bakery-orders-api) to a lo
 make cluster-up     # single-node kind cluster named bakery-lab
 kubectl get nodes
 make image          # build bakery-orders-api from source, kind load it as bakery-orders-api:local
+make monitoring-up  # kube-prometheus-stack (pinned version) into the monitoring namespace
 make cluster-down   # tear it down
 ```
 
@@ -27,6 +28,7 @@ make cluster-down   # tear it down
 - `kind/cluster.yaml` - single-node kind cluster config
 - `scripts/load-image.sh` - builds the app image from source and loads it into kind
 - `charts/bakery-orders-api/` - Helm chart for the app (in progress)
+- `monitoring/values.yaml` - kube-prometheus-stack values tuned for kind (no Alertmanager, kind-unreachable control-plane targets off)
 
 ## License
 

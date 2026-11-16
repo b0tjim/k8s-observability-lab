@@ -1,0 +1,34 @@
+# kube-prometheus-stack values for a small local kind cluster.
+# Chart version is pinned in the Makefile (KPS_VERSION).
+
+# Pick up ServiceMonitors / PrometheusRules from any release, not only ones
+# labelled with this chart's release name (our app chart is a separate release).
+prometheus:
+  prometheusSpec:
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelectorNilUsesHelmValues: false
+    ruleSelectorNilUsesHelmValues: false
+    retention: 2d
+    resources:
+      requests:
+        cpu: 100m
+        memory: 256Mi
+
+grafana:
+  # Local-only placeholder password; never reuse outside kind.
+  adminPassword: admin
+
+# Keep the lab light: no Alertmanager (alerts still show in Prometheus' Alerts page).
+alertmanager:
+  enabled: false
+
+# kind's control-plane components only listen on localhost, so these targets
+# would always be down. Turn them off instead of showing red targets.
+kubeEtcd:
+  enabled: false
+kubeControllerManager:
+  enabled: false
+kubeScheduler:
+  enabled: false
+kubeProxy:
+  enabled: false

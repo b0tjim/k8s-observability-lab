@@ -15,7 +15,7 @@ app's `/metrics` endpoint and a provisioned Grafana dashboard. CI spins up kind 
 - [x] 9. CI workflow: `helm lint` + kubeconform validation of rendered manifests on every push
 - [x] 10. CI workflow: create a kind cluster, load the image, `helm install`, wait for rollout
 - [x] 11. CI smoke test: port-forward and `curl` `/health`, create an order, list it back
-- [ ] 12. Install kube-prometheus-stack via `make monitoring-up` with a pinned chart version and `monitoring/values.yaml`
+- [x] 12. Install kube-prometheus-stack via `make monitoring-up` with a pinned chart version and `monitoring/values.yaml`
 - [ ] 13. Chart: optional ServiceMonitor (toggled by `metrics.serviceMonitor.enabled`) scraping `/metrics`
 - [ ] 14. Grafana dashboard JSON (request rate, latency, error rate, orders created) in `dashboards/`
 - [ ] 15. Chart: ConfigMap with the `grafana_dashboard` label so Grafana's sidecar auto-loads the dashboard

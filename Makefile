@@ -1,6 +1,7 @@
 CLUSTER_NAME ?= bakery-lab
+KPS_VERSION ?= 93.3.0
 
-.PHONY: cluster-up cluster-down image install smoke lint validate
+.PHONY: cluster-up cluster-down image install smoke lint validate monitoring-up monitoring-down
 
 cluster-up: ## Create the local kind cluster
 	kind create cluster --config kind/cluster.yaml --name $(CLUSTER_NAME) --wait 60s
@@ -27,3 +28,12 @@ validate: ## Validate rendered manifests against Kubernetes schemas (needs kubec
 		helm template bakery charts/bakery-orders-api -f charts/bakery-orders-api/$$v \
 			| kubeconform -strict -summary -kubernetes-version 1.31.0 || exit 1; \
 	done
+
+monitoring-up: ## Install kube-prometheus-stack (Prometheus + Grafana) into the monitoring namespace
+	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts --force-update
+	helm upgrade --install monitoring prometheus-community/kube-prometheus-stack \
+		--version $(KPS_VERSION) --namespace monitoring --create-namespace \
+		-f monitoring/values.yaml --wait --timeout 10m
+
+monitoring-down: ## Remove the monitoring stack
+	helm uninstall monitoring --namespace monitoring
