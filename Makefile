@@ -26,8 +26,11 @@ lint: ## Lint the chart and render it with the kind values
 validate: ## Validate rendered manifests against Kubernetes schemas (needs kubeconform)
 	for v in values.yaml values-kind.yaml; do \
 		helm template bakery charts/bakery-orders-api -f charts/bakery-orders-api/$$v \
-			| kubeconform -strict -summary -kubernetes-version 1.31.0 || exit 1; \
+			| kubeconform -strict -summary -ignore-missing-schemas -kubernetes-version 1.31.0 || exit 1; \
 	done
+	# ServiceMonitor is a CRD with no built-in schema, so it is skipped; this still checks the template renders.
+	helm template bakery charts/bakery-orders-api --set metrics.serviceMonitor.enabled=true \
+		| kubeconform -strict -summary -ignore-missing-schemas -kubernetes-version 1.31.0
 
 monitoring-up: ## Install kube-prometheus-stack (Prometheus + Grafana) into the monitoring namespace
 	helm repo add prometheus-community https://prometheus-community.github.io/helm-charts --force-update

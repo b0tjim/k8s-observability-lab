@@ -1,0 +1,19 @@
+{{- if .Values.metrics.serviceMonitor.enabled }}
+# Needs the ServiceMonitor CRD from kube-prometheus-stack (make monitoring-up) before install.
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "bakery-orders-api.fullname" . }}
+  labels:
+    {{- include "bakery-orders-api.labels" . | nindent 4 }}
+    app.kubernetes.io/component: api
+spec:
+  selector:
+    matchLabels:
+      {{- include "bakery-orders-api.selectorLabels" . | nindent 6 }}
+      app.kubernetes.io/component: api
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: {{ .Values.metrics.serviceMonitor.interval }}
+{{- end }}
