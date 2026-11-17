@@ -23,6 +23,9 @@ metrics:
     # Off by default: the ServiceMonitor CRD only exists once kube-prometheus-stack is installed.
     enabled: false
     interval: 15s
+  prometheusRule:
+    # Alerts (app down, high 5xx rate). Also needs kube-prometheus-stack's CRDs, so off by default.
+    enabled: false
   dashboard:
     # A plain ConfigMap, harmless without Grafana; the sidecar picks it up when the monitoring stack runs.
     enabled: true

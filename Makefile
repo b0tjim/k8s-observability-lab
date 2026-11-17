@@ -28,8 +28,8 @@ validate: ## Validate rendered manifests against Kubernetes schemas (needs kubec
 		helm template bakery charts/bakery-orders-api -f charts/bakery-orders-api/$$v \
 			| kubeconform -strict -summary -ignore-missing-schemas -kubernetes-version 1.31.0 || exit 1; \
 	done
-	# ServiceMonitor is a CRD with no built-in schema, so it is skipped; this still checks the template renders.
-	helm template bakery charts/bakery-orders-api --set metrics.serviceMonitor.enabled=true \
+	# ServiceMonitor/PrometheusRule are CRDs with no built-in schema, so they are skipped; this still checks the templates render.
+	helm template bakery charts/bakery-orders-api --set metrics.serviceMonitor.enabled=true --set metrics.prometheusRule.enabled=true \
 		| kubeconform -strict -summary -ignore-missing-schemas -kubernetes-version 1.31.0
 
 monitoring-up: ## Install kube-prometheus-stack (Prometheus + Grafana) into the monitoring namespace

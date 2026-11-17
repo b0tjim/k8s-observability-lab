@@ -1,0 +1,33 @@
+{{- if .Values.metrics.prometheusRule.enabled }}
+# Needs the PrometheusRule CRD from kube-prometheus-stack (make monitoring-up) before install.
+# The job label is the Service name, which is what the ServiceMonitor scrapes under.
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "bakery-orders-api.fullname" . }}
+  labels:
+    {{- include "bakery-orders-api.labels" . | nindent 4 }}
+spec:
+  groups:
+    - name: bakery-orders-api
+      rules:
+        - alert: BakeryOrdersApiDown
+          # absent() also fires if the target disappears entirely, not only when it reports down.
+          expr: up{job="{{ include "bakery-orders-api.fullname" . }}"} == 0 or absent(up{job="{{ include "bakery-orders-api.fullname" . }}"})
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: bakery-orders-api is not being scraped successfully
+            description: Prometheus has had no healthy /metrics target for the app for 2 minutes.
+        - alert: BakeryOrdersApiHigh5xxRate
+          expr: |
+            sum(rate(http_requests_total{job="{{ include "bakery-orders-api.fullname" . }}",status=~"5.."}[5m]))
+              / sum(rate(http_requests_total{job="{{ include "bakery-orders-api.fullname" . }}"}[5m])) > 0.05
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: bakery-orders-api 5xx rate above 5%
+            description: {{ "'{{ $value | humanizePercentage }} of requests failed with a 5xx over the last 5 minutes.'" }}
+{{- end }}
