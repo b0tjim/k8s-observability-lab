@@ -23,6 +23,9 @@ metrics:
     # Off by default: the ServiceMonitor CRD only exists once kube-prometheus-stack is installed.
     enabled: false
     interval: 15s
+  dashboard:
+    # A plain ConfigMap, harmless without Grafana; the sidecar picks it up when the monitoring stack runs.
+    enabled: true
 
 # Override the generated resource names if needed.
 nameOverride: ""

@@ -30,7 +30,7 @@ jobs:
         run: make validate
 
       - name: Check dashboard JSON is valid
-        run: jq empty dashboards/*.json
+        run: jq empty charts/bakery-orders-api/dashboards/*.json
 
   kind:
     name: Deploy to kind

@@ -17,6 +17,10 @@ prometheus:
 grafana:
   # Local-only placeholder password; never reuse outside kind.
   adminPassword: admin
+  # The app chart ships its dashboard as a ConfigMap in its own namespace, so watch all namespaces.
+  sidecar:
+    dashboards:
+      searchNamespaces: ALL
 
 # Keep the lab light: no Alertmanager (alerts still show in Prometheus' Alerts page).
 alertmanager:

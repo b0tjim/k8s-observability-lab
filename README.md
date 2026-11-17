@@ -28,7 +28,7 @@ make cluster-down   # tear it down
 - `kind/cluster.yaml` - single-node kind cluster config
 - `scripts/load-image.sh` - builds the app image from source and loads it into kind
 - `charts/bakery-orders-api/` - Helm chart for the app (in progress)
-- `dashboards/bakery-orders-api.json` - Grafana dashboard: request rate, p50/p95 latency, 5xx error rate, orders created
+- `charts/bakery-orders-api/dashboards/bakery-orders-api.json` - Grafana dashboard (request rate, p50/p95 latency, 5xx error rate, orders created), shipped as a `grafana_dashboard` ConfigMap so Grafana auto-loads it
 - `monitoring/values.yaml` - kube-prometheus-stack values tuned for kind (no Alertmanager, kind-unreachable control-plane targets off)
 
 ## License

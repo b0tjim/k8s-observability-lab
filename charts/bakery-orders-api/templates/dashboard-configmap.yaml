@@ -1,0 +1,13 @@
+{{- if .Values.metrics.dashboard.enabled }}
+# Grafana's dashboard sidecar (kube-prometheus-stack) loads any ConfigMap with this label.
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "bakery-orders-api.fullname" . }}-dashboard
+  labels:
+    {{- include "bakery-orders-api.labels" . | nindent 4 }}
+    grafana_dashboard: "1"
+data:
+  bakery-orders-api.json: |-
+    {{- .Files.Get "dashboards/bakery-orders-api.json" | nindent 4 }}
+{{- end }}
