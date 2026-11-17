@@ -20,7 +20,7 @@ app's `/metrics` endpoint and a provisioned Grafana dashboard. CI spins up kind 
 - [x] 14. Grafana dashboard JSON (request rate, latency, error rate, orders created) in `dashboards/`
 - [x] 15. Chart: ConfigMap with the `grafana_dashboard` label so Grafana's sidecar auto-loads the dashboard
 - [x] 16. A couple of PrometheusRule alerts (app down, high 5xx rate)
-- [ ] 17. CI: install the monitoring stack in kind and assert Prometheus has the app target `up`
+- [x] 17. CI: install the monitoring stack in kind and assert Prometheus has the app target `up`
 - [ ] 18. `scripts/load.sh` to generate traffic so the dashboard has something to show
 - [ ] 19. README: architecture diagram (Mermaid), what it demonstrates, step-by-step how to run it locally
 - [ ] 20. Badges, dashboard screenshot or description, final polish, tag `v0.1.0`

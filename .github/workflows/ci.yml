@@ -58,9 +58,19 @@ jobs:
       - name: Smoke test (health, create an order, list it back)
         run: make smoke
 
+      - name: Install kube-prometheus-stack
+        run: make monitoring-up
+
+      - name: Enable the ServiceMonitor and alerts
+        run: make install HELM_ARGS="--set metrics.serviceMonitor.enabled=true --set metrics.prometheusRule.enabled=true"
+
+      - name: Assert Prometheus scrapes the app
+        run: make check-metrics
+
       - name: Show cluster state on failure
         if: failure()
         run: |
           kubectl get pods -o wide
           kubectl describe pods
           kubectl logs -l app.kubernetes.io/component=api --tail=100 || true
+          kubectl -n monitoring get pods || true
