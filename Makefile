@@ -2,8 +2,9 @@ CLUSTER_NAME ?= bakery-lab
 KPS_VERSION ?= 93.3.0
 # Extra flags for `make install`, e.g. HELM_ARGS="--set metrics.serviceMonitor.enabled=true"
 HELM_ARGS ?=
+REQUESTS ?= 300
 
-.PHONY: cluster-up cluster-down image install smoke check-metrics lint validate monitoring-up monitoring-down
+.PHONY: cluster-up cluster-down image install smoke load check-metrics lint validate monitoring-up monitoring-down
 
 cluster-up: ## Create the local kind cluster
 	kind create cluster --config kind/cluster.yaml --name $(CLUSTER_NAME) --wait 60s
@@ -20,6 +21,9 @@ install: ## Install (or upgrade) the chart into kind and wait for it to be ready
 
 smoke: ## Port-forward the app and check /health, create an order, list it back
 	scripts/smoke-test.sh
+
+load: ## Send traffic to the app so the dashboard has data (REQUESTS=300)
+	scripts/load.sh $(REQUESTS)
 
 check-metrics: ## Assert Prometheus is scraping the app (target up)
 	scripts/check-prometheus-target.sh

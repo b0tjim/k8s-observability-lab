@@ -58,6 +58,9 @@ jobs:
       - name: Smoke test (health, create an order, list it back)
         run: make smoke
 
+      - name: Generate a little traffic
+        run: make load REQUESTS=30
+
       - name: Install kube-prometheus-stack
         run: make monitoring-up
 

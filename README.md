@@ -20,12 +20,14 @@ make cluster-up     # single-node kind cluster named bakery-lab
 kubectl get nodes
 make image          # build bakery-orders-api from source, kind load it as bakery-orders-api:local
 make monitoring-up  # kube-prometheus-stack (pinned version) into the monitoring namespace
+make load           # send ~300 mixed requests so the Grafana dashboard has data
 make cluster-down   # tear it down
 ```
 
 ## Layout
 
 - `kind/cluster.yaml` - single-node kind cluster config
+- `scripts/load.sh` - port-forwards the app and sends mixed traffic (creates, reads, a few 404/422s)
 - `scripts/load-image.sh` - builds the app image from source and loads it into kind
 - `charts/bakery-orders-api/` - Helm chart for the app (in progress)
 - `charts/bakery-orders-api/dashboards/bakery-orders-api.json` - Grafana dashboard (request rate, p50/p95 latency, 5xx error rate, orders created), shipped as a `grafana_dashboard` ConfigMap so Grafana auto-loads it
