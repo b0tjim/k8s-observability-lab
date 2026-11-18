@@ -1,10 +1,14 @@
 # k8s-observability-lab
 
+[![CI](https://github.com/b0tjim/k8s-observability-lab/actions/workflows/ci.yml/badge.svg)](https://github.com/b0tjim/k8s-observability-lab/actions/workflows/ci.yml)
+[![Helm](https://img.shields.io/badge/helm-3-0F1689.svg)](charts/bakery-orders-api/Chart.yaml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+
 Deploys [bakery-orders-api](https://github.com/b0tjim/bakery-orders-api) to a local
 [kind](https://kind.sigs.k8s.io/) cluster with a Helm chart, then watches it with Prometheus + Grafana
 (kube-prometheus-stack).
 
-> Work in progress. See [ROADMAP.md](ROADMAP.md) for what's done and what's next.
+Built step by step; see [ROADMAP.md](ROADMAP.md) for the history.
 
 ## Architecture
 
@@ -78,6 +82,21 @@ kubectl -n monitoring port-forward svc/monitoring-kube-prometheus-prometheus 909
 # The API itself: http://localhost:8000/docs
 kubectl port-forward svc/bakery-bakery-orders-api 8000:8000
 ```
+
+### The dashboard
+
+"Bakery Orders API" has a `job` variable (defaults to all) and four panels, all built from the
+`http_requests_total` counter and `http_request_duration_seconds` histogram the app exposes on `/metrics`:
+
+| Panel | PromQL idea |
+|-------|-------------|
+| Request rate | `rate(http_requests_total[5m])` by method and path |
+| Latency p50 / p95 | `histogram_quantile` over the duration buckets, per path |
+| Error rate (5xx share) | 5xx requests / all requests |
+| Orders created | `increase` of successful `POST /orders` over the selected range |
+
+Run `make load` first so the panels have data. No screenshot is checked in: the lab runs on a throwaway
+kind cluster, so the honest way to see it is to run it.
 
 `make lint` and `make validate` (needs kubeconform) work without a cluster.
 
